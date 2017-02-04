@@ -1,5 +1,5 @@
 # Barn - Ansible playbooks for Laravel applications
-This repository provides Ansible playbook targeted spesifically for Laravel applications. If you are not familiar with Ansible, it is an open-source tool that is most commonly used for provisioning, configuration management and deployment. Together with Ansible and these playbooks you can automate provisioning of your servers and development environment to be ready for deployment. Barn can automatically configures the following:
+This repository provides Ansible playbook targeted spesifically for Laravel applications. If you are not familiar with Ansible, it is an open-source tool that is most commonly used for provisioning, configuration management and deployment. Together with Ansible and these playbooks you can automate provisioning of your servers and development environment. Please note that Barn is not the designed to handle the actual deployment of the Laravel application. For deployment tools I suggest you checkout [Envoyer](https://envoyer.io/), [Deployer](https://deployer.org) or [Capistrano](http://capistranorb.com/) to name a few. Barn can automatically configures the following:
 
 * PHP
 * nginx + php-fpm with multiple virtual hosts
@@ -70,7 +70,7 @@ Since you storing highly confidential information like production database passw
 | mysql_root_password                   | Root password for MySQL                                                                         | Yes       |
 | mysql_databases.name                  | Name of MySQL database that will generated                                                      | Yes       |
 | mysql_databases.name.mysql_user       | Name of normal MySQL user for that database. Place this in your .env file.                      | Yes       |
-| mysql_databases.name.mysql_password   | Password for the MySQL user. Place this in your .env file.                                      | Yes       |   	|
+| mysql_databases.name.mysql_password   | Password for the MySQL user. Place this in your .env file.                                      | Yes       |     |
 
 ## Running Barn
 
