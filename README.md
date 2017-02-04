@@ -59,18 +59,18 @@ Since you storing highly confidential information like production database passw
 
 #### Supported variables
 
-| Name                                 	|                                          Description                                          	| Required 	|
-|--------------------------------------	|:---------------------------------------------------------------------------------------------:	|---------:	|
-| enable_ssl                           	| Controls whether the Playbook configures Let's Encrypt certificates on all the virtual hosts. 	| No       	|
-| letsencrypt_email                    	| Email address for sending the expiry notices for the certificates.                            	| No       	|
-| virtualhosts.name                    	| Shortname used for folders like /var/www/name/public                                          	| Yes      	|
-| virtualhosts.name.servername         	| Hostname for the virtual host. Must be a valid FQDN if you set enable_ssl to true.            	| Yes      	|
-| virtualhosts.name.run_queue_worker   	| Sets whether we should run artisan queue:work on this virtualhost                             	| No       	|
-| virtualhosts.name.has_scheduled_jobs 	| Sets whether we should run artisan schedule:run every minute on this virtualhost              	| No       	|
-| mysql_root_password                  	| Root password for MySQL                                                                       	| Yes      	|
-| mysql_databases.name                 	| Name of MySQL database that will generated                                                    	| Yes      	|
-| mysql_databases.name.mysql_user      	| Name of normal MySQL user for that database. Place this in your .env file.                    	| Yes      	|
-| mysql_databases.name.mysql_password  	| Password for the MySQL user. Place this in your .env file.                                    	| Yes      	|
+| Name                                  | Description                                                                                     | Required  |
+|-------------------------------------- |-----------------------------------------------------------------------------------------------  |---------- |
+| enable_ssl                            | Controls whether the Playbook configures Let's Encrypt certificates on all the virtual hosts.   | No        |
+| letsencrypt_email                     | Email address for sending the expiry notices for the certificates.                              | No        |
+| virtualhosts.name                     | Shortname used for folders like /var/www/name/public                                            | Yes       |
+| virtualhosts.name.servername          | Hostname for the virtual host. Must be a valid FQDN if you set enable_ssl to true.              | Yes       |
+| virtualhosts.name.run_queue_worker    | Sets whether we should run artisan queue:work on this virtualhost                               | No        |
+| virtualhosts.name.has_scheduled_jobs  | Sets whether we should run artisan schedule:run every minute on this virtualhost                | No        |
+| mysql_root_password                   | Root password for MySQL                                                                         | Yes       |
+| mysql_databases.name                  | Name of MySQL database that will generated                                                      | Yes       |
+| mysql_databases.name.mysql_user       | Name of normal MySQL user for that database. Place this in your .env file.                      | Yes       |
+| mysql_databases.name.mysql_password   | Password for the MySQL user. Place this in your .env file.                                      | Yes       |   	|
 
 ## Running Barn
 
