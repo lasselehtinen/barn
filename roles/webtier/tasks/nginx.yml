@@ -1,0 +1,35 @@
+# file: roles/webtier/tasks/nginx.yml
+- name: Install nginx
+  tags: nginx
+  yum: name=nginx state=installed
+
+- name: Make sure nginx is running and is started on boot
+  tags: nginx
+  service: name=nginx state=started enabled=yes
+
+- name: Make sure nginx is configured
+  tags: nginx
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify:
+    - Restart nginx
+
+- name: Make sure nginx virtual hosts are configured
+  tags: nginx
+  template: src=nginx-virtualhost.conf.j2 dest=/etc/nginx/conf.d/{{ item.key }}.conf
+  with_dict: "{{ virtualhosts }}"
+  when: enable_ssl|default(false)|bool == false
+
+- name: Make sure SSL nginx virtual hosts are configured
+  tags: nginx
+  template: src=nginx-ssl-virtualhost.conf.j2 dest=/etc/nginx/conf.d/{{ item.key }}.conf
+  with_dict: "{{ virtualhosts }}"
+  when: enable_ssl|default(false)|bool == true
+
+  notify:
+    - Restart nginx
+
+- name: Create public directory
+  tags: nginx
+  file: path=/var/www/{{ item.key }}/public state=directory owner=nginx group=nginx mode=0775
+  with_dict: "{{ virtualhosts }}"
+

@@ -1,0 +1,7 @@
+# file: queueservers.yml
+- hosts: queueservers
+  become: true
+  become_user: root
+  roles:
+    - common
+    - queuetier

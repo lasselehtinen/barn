@@ -1,0 +1,20 @@
+# file: roles/webtier/tasks/php.yml
+- name: Install PHP and extensions
+  yum: name={{ item }} state=installed enablerepo=epel,remi,remi-php71
+  tags: php
+  with_items:
+    - php
+    - php-zip
+    - php-openssl
+    - php-pdo
+    - php-mbstring
+    - php-tokenizer
+    - php-xml
+    - php-mysqlnd
+    - php-opcache
+
+#- name: Make sure PHP is configured
+#  tags: php
+#  template: src=php.ini.j2 dest=/etc/php.ini
+#  notify:
+#    - Restart php-fpm

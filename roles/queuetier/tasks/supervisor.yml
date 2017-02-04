@@ -1,0 +1,16 @@
+# file: roles/beanstalktier/tasks/supervisor.yml
+- name: Install supervisor
+  tags: supervisor
+  yum: name=supervisor state=installed
+
+- name: Make sure supervisor is running and started on boot
+  tags: supervisor
+  systemd: daemon_reload=yes state=started name=supervisord enabled=yes
+
+- name: Make sure supervisor job is configured
+  tags: supervisor
+  template: src=supervisor.conf.j2 dest=/etc/supervisord.d/{{ item.key }}-worker.ini
+  with_dict: "{{ virtualhosts }}"
+  when: item.value.run_queue_worker|default(false)|bool == true
+  notify:
+    - Reload supervisord config

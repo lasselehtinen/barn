@@ -1,0 +1,22 @@
+# file: roles/common/tasks/yum-cron.yml
+- name: Update yum
+  yum: name=yum state=latest
+
+- name: Install deltarpm
+  yum: name=deltarpm state=installed
+
+- name: Install yum-cron
+  tags: yum-cron
+  yum: name=yum-cron state=installed
+
+- name: Make sure yum-cron is running and started on boot
+  tags: yum-cron
+  service: name=yum-cron state=started enabled=yes
+
+- name: Enable automatic updates for yum-cron
+  tags: yum-cron
+  ini_file:
+    dest: /etc/yum/yum-cron.conf
+    section: commands
+    option: apply_updates
+    value: 'yes'

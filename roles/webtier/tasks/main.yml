@@ -1,0 +1,12 @@
+# file: roles/webtier/tasks/main.yml
+- include: remi.yml
+- include: php.yml
+- include: php-fpm.yml
+- include: composer.yml
+- include: nginx.yml
+- include: cron.yml
+- include: letsencrypt.yml
+  when: enable_ssl|default(false)|bool == true
+- include: firewalld.yml
+- include: redis.yml
+- include: selinux.yml

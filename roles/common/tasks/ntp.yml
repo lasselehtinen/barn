@@ -1,0 +1,9 @@
+# file: roles/common/tasks/ntp.yml
+- name: Install ntp
+  yum: name=ntp state=installed
+
+- name: Make sure ntpd is running
+  service: name=ntpd state=started
+
+- name: Make sure ntpd is started on boot
+  service: name=ntpd enabled=yes

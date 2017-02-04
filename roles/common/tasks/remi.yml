@@ -1,0 +1,10 @@
+# file: roles/common/tasks/remi.yml
+- name: Import PGP key for Remi's RPM repository
+  tags: remi
+  rpm_key: state=present key=http://rpms.famillecollet.com/RPM-GPG-KEY-remi
+
+- name: Install package for Remi's RPM repository
+  tags: remi
+  yum:
+    name: "http://rpms.remirepo.net/enterprise/remi-release-{{ ansible_distribution_major_version }}.rpm"
+    state: present

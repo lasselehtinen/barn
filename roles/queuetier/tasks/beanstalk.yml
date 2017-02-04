@@ -1,0 +1,8 @@
+# file: roles/queuetier/tasks/beanstalk.yml
+- name: Install beanstalk
+  tags: beanstalk
+  yum: name=beanstalkd state=installed
+
+- name: Make sure beanstalk is running and started on boot
+  tags: beanstalk
+  service: name=beanstalkd state=started

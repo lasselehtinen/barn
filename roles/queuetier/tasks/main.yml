@@ -1,0 +1,3 @@
+# file: roles/queuetier/tasks/main.yml
+- include: beanstalk.yml
+- include: supervisor.yml

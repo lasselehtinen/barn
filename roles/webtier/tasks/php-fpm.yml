@@ -1,0 +1,14 @@
+# file: roles/webtier/tasks/php-fpm.yml
+- name: Install php-fpm
+  tags: php-fpm
+  yum: name=php-fpm state=installed
+
+- name: Make sure php-fpm is running
+  tags: php-fpm
+  service: name=php-fpm state=started enabled=yes
+
+- name: Make sure php-fpm is configured
+  tags: php-fpm
+  template: src=php-fpm.conf.j2 dest=/etc/php-fpm.d/www.conf
+  notify:
+    - Restart php-fpm

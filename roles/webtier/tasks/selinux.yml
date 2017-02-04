@@ -1,0 +1,10 @@
+# file: roles/webtier/tasks/selinux.yml
+- name: Enable nginx to have access to the deployment folder
+  tags: selinux
+  shell: chcon -R -t httpd_sys_rw_content_t /var/www/{{ item.key }}/public
+  with_dict: "{{ virtualhosts }}"
+  changed_when: False
+
+- name: Allow nginx to make TCP connections ie. to redis/beanstalk
+  tags: selinux
+  seboolean: name=httpd_can_network_connect state=yes persistent=yes

@@ -1,0 +1,3 @@
+# file: roles/dbtier/handlers/main.yml
+- name: Restart MySQL
+  service: name=mysqld state=restarted

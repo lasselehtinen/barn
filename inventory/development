@@ -1,0 +1,10 @@
+# file: development
+
+[webservers]
+localhost ansible_ssh_host=localhost ansible_ssh_port=2200 ansible_ssh_user=vagrant
+
+[mysqlservers]
+localhost ansible_ssh_host=localhost ansible_ssh_port=2200 ansible_ssh_user=vagrant
+
+[queueservers]
+localhost ansible_ssh_host=localhost ansible_ssh_port=2200 ansible_ssh_user=vagrant

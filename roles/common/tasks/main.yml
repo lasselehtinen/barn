@@ -1,0 +1,29 @@
+# file: roles/common/tasks/main.yml
+
+- name: Make sure epel-repository is installed
+  yum: name=epel-release state=installed
+  tags: epel
+
+- include: remi.yml
+
+- name: Upgrade all packages
+  yum: name=* state=latest
+
+- name: Make sure git is installed
+  tags: git
+  yum: name=git state=installed
+
+- name: Make sure unzip is installed
+  tags: unzip
+  yum: name=unzip state=installed
+
+- name: Remove require tty
+  lineinfile:
+    dest: /etc/sudoers
+    line: 'Defaults    requiretty'
+    state: absent
+
+- include: ntp.yml
+- include: selinux.yml
+- include: yum-cron.yml
+- include: swap.yml

@@ -1,0 +1,12 @@
+# file: roles/db/tasks/firewalld.yml
+- name: Install firewalld
+  yum: name=firewalld state=installed
+
+- name: Make sure firewalld is running
+  service: name=firewalld state=started
+
+- name: Make sure firewalld is started on boot
+  service: name=firewalld enabled=yes
+
+- name: Enable firewall to enable incoming connections to MySQL
+  firewalld: service=mysql permanent=true state=enabled zone=public immediate=true

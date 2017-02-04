@@ -1,0 +1,29 @@
+# file: roles/webtier/tasks/letsencrypt.yml
+- name: Install certbot
+  tags: letsencrypt
+  yum: name=certbot state=installed
+
+- name: Check if Diffie-Hellman group exists
+  tags: letsencrypt2
+  stat:
+    path: /etc/ssl/certs/dhparam.pem
+  register: group_exists
+
+- name: Generate a strong 2048 bit Diffie-Hellman group
+  tags: letsencrypt2
+  shell: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+  when: group_exists.stat.exists == false
+
+- name: Install / renew certificates
+  tags: letsencrypt
+  shell: certbot certonly --noninteractive --webroot --email {{ letsencrypt_email }} --agree-tos --renew-by-default -w /var/www/{{ item.key }}/public -d {{ item.value.servername }}
+  with_dict: "{{ virtualhosts }}"
+  notify:
+    - Restart nginx
+
+- name: Add auto renewal for certificates to crontab
+  tags: letsencrypt
+  cron:
+    name: "Weekly check for certificates"
+    special_time: weekly
+    job: /usr/bin/certbot renew --post-hook "service nginx restart"

@@ -1,0 +1,4 @@
+# file: roles/queuetier/handlers/main.yml
+- name: Reload supervisord config
+  shell: supervisorctl update
+  changed_when: False

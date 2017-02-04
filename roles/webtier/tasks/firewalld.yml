@@ -1,0 +1,16 @@
+# file: roles/webtier/tasks/firewalld.yml
+- name: Install firewalld
+  tags: firewalld
+  yum: name=firewalld state=installed
+
+- name: Make sure firewalld is running and is started on boot
+  tags: firewalld
+  service: name=firewalld state=started enabled=yes
+
+- name: Enable firewall to enable incoming HTTP
+  tags: firewalld
+  firewalld: service=http permanent=true state=enabled zone=public immediate=true
+
+- name: Enable firewall to enable incoming HTTPS
+  tags: firewalld
+  firewalld: service=https permanent=true state=enabled zone=public immediate=true

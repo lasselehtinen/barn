@@ -1,0 +1,49 @@
+# file: roles/dbtier/tasks/mysql.yml
+- name: Install package for MySQL community edition repository
+  tags: mysql
+  yum:
+    name: "http://repo.mysql.com/mysql-community-release-el{{ ansible_distribution_major_version }}-5.noarch.rpm"
+    #name: "https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm"
+    state: present
+
+- name: Install MySQL
+  tags: mysql
+  yum: name=mysql-server state=installed
+
+- name: Make sure MySQL is running and started on boot
+  tags: mysql
+  service: name=mysqld state=started enabled=yes
+
+- name: Install MySQL-python
+  tags: mysql
+  yum: name=MySQL-python state=installed
+
+- name: Copy .my.cnf file with root password credentials
+  tags: mysql
+  template: src=my-credentials.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
+
+- name: Update mysql root password for all root accounts
+  tags: mysql
+  mysql_user: check_implicit_admin=yes name=root host=localhost password={{ mysql_root_password }}
+
+- name: Create MySQL databases
+  tags: mysql
+  mysql_db: name={{ item.key }} state=present
+  with_dict: "{{ mysql_databases }}"
+
+- name: Create application database user
+  tags: mysql
+  mysql_user: name={{ item.value.mysql_user }} host=localhost password={{ item.value.mysql_password }} priv={{ item.key }}.*:ALL
+  with_dict: "{{ mysql_databases }}"
+
+- name: Delete anonymous MySQL server user for {{ ansible_hostname }}
+  tags: mysql
+  action: mysql_user user="" host="{{ ansible_hostname }}" state="absent"
+ 
+- name: Delete anonymous MySQL server user for localhost
+  tags: mysql
+  action: mysql_user user="" state="absent"
+ 
+- name: Remove the MySQL test database
+  tags: mysql
+  action: mysql_db db=test state=absent

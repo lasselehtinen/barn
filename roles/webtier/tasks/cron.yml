@@ -1,0 +1,6 @@
+# file: roles/webtier/tasks/cron.yml
+- name: Add crontab entry for Laravel scheduler
+  tags: cron
+  cron: name="Run Laravel scheduler for {{ item.key }}" job="php /var/www/{{ item.key }}/artisan schedule:run >> /dev/null 2>&1"
+  with_dict: "{{ virtualhosts }}"
+  when: item.value.has_scheduled_jobs|default(false)|bool == true
