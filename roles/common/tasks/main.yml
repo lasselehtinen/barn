@@ -3,19 +3,38 @@
 - name: Make sure epel-repository is installed
   yum: name=epel-release state=installed
   tags: epel
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - include: remi.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: Upgrade all packages
   yum: name=* state=latest
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Upgrade all packages
+  apt: upgrade=full update_cache=yes
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure git is installed
   tags: git
   yum: name=git state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Make sure git is installed
+  tags: git
+  apt: name=git state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure unzip is installed
   tags: unzip
   yum: name=unzip state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Make sure unzip is installed
+  tags: unzip
+  apt: name=unzip state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Remove require tty
   lineinfile:
@@ -25,5 +44,9 @@
 
 - include: ntp.yml
 - include: selinux.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 - include: yum-cron.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+- include: cron-apt.yml
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 - include: swap.yml

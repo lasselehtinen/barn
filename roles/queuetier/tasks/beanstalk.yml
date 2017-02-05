@@ -2,6 +2,12 @@
 - name: Install beanstalk
   tags: beanstalk
   yum: name=beanstalkd state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Install beanstalk
+  tags: beanstalk
+  apt: name=beanstalkd state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure beanstalk is running and started on boot
   tags: beanstalk

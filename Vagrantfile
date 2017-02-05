@@ -1,15 +1,35 @@
 Vagrant.configure("2") do |config|
-  # Set the base box
-  config.vm.box = "centos/7"
+  # List of servers
+  servers=[
+    {
+      :hostname => "barn-centos7",
+      :box => "centos/7",
+      :ip => "192.168.56.101",
+      :ssh_port => '2210'
+    },
+    {
+      :hostname => "barn-ubuntu",
+      :box => "ubuntu/trusty64",
+      :ip => "192.168.56.102",
+      :ssh_port => '2211'
+    }
+  ]
 
-  # Create a private network, which allows host-only access to the machine using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
+  servers.each do |machine|
 
-  # config.vm.synced_folder "../data", "/vagrant_data"
+    config.vm.define machine[:hostname] do |node|
+      node.vm.box = machine[:box]
+      node.vm.hostname = machine[:hostname]
+    
+      node.vm.network :private_network, ip: machine[:ip]
+      node.vm.network "forwarded_port", guest: 22, host: machine[:ssh_port], id: "ssh"
 
-  # Set the memory
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = "1024"
+      node.vm.provider :virtualbox do |v|
+        v.customize ["modifyvm", :id, "--memory", 512]
+        v.customize ["modifyvm", :id, "--name", machine[:hostname]]
+      end
+    end
+
   end
 
   # Inject your public SSH key

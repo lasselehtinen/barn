@@ -2,15 +2,35 @@
 - name: Install supervisor
   tags: supervisor
   yum: name=supervisor state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Install supervisor
+  tags: supervisor
+  apt: name=supervisor state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure supervisor is running and started on boot
   tags: supervisor
   systemd: daemon_reload=yes state=started name=supervisord enabled=yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Make sure supervisor is running and started on boot
+  tags: supervisor
+  service: name=supervisor state=started enabled=yes
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure supervisor job is configured
   tags: supervisor
   template: src=supervisor.conf.j2 dest=/etc/supervisord.d/{{ item.key }}-worker.ini
   with_dict: "{{ virtualhosts }}"
-  when: item.value.run_queue_worker|default(false)|bool == true
+  when: item.value.run_queue_worker|default(false)|bool == true and ansible_distribution == 'CentOS'
   notify:
     - Reload supervisord config
+
+- name: Make sure supervisor job is configured
+  tags: supervisor
+  template: src=supervisor-debian.conf.j2 dest=/etc/supervisor/conf.d/{{ item.key }}-worker.conf
+  with_dict: "{{ virtualhosts }}"
+  when: item.value.run_queue_worker|default(false)|bool == true and ansible_distribution == 'Ubuntu'
+  notify:
+    - Reload supervisord config (Debian)

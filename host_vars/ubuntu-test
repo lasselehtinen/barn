@@ -1,0 +1,19 @@
+# Let's Encrypt settings
+enable_ssl: false
+letsencrypt_email: somebody@somewhere.com
+
+# A list of virtual hosts
+virtualhosts:
+  blog:
+    servername: blog.development
+    run_queue_worker: true
+    has_scheduled_jobs: true
+    
+# MySQL root password
+mysql_root_password: somesecret
+
+# List of MySQL databases
+mysql_databases:
+  blog:
+     mysql_user: blog
+     mysql_password: table_password

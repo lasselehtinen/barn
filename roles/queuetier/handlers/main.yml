@@ -2,3 +2,7 @@
 - name: Reload supervisord config
   shell: supervisorctl update
   changed_when: False
+
+- name: Reload supervisord config (Debian)
+  shell: supervisorctl update
+  changed_when: False

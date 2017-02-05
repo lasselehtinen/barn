@@ -1,0 +1,9 @@
+[program:{{ item.key }}-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/{{ item.key }}/public/artisan queue:work --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=www-data
+numprocs=4
+redirect_stderr=true
+stdout_logfile=/var/log/{{ item.key }}-worker.log

@@ -3,20 +3,38 @@
   tags: mysql
   yum:
     name: "http://repo.mysql.com/mysql-community-release-el{{ ansible_distribution_major_version }}-5.noarch.rpm"
-    #name: "https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm"
     state: present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: Install MySQL
   tags: mysql
   yum: name=mysql-server state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Install MySQL
+  tags: mysql
+  apt: name=mysql-server state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure MySQL is running and started on boot
   tags: mysql
   service: name=mysqld state=started enabled=yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Make sure MySQL is running and started on boot
+  tags: mysql
+  service: name=mysql state=started enabled=yes
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Install MySQL-python
   tags: mysql
   yum: name=MySQL-python state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Install MySQL-python
+  tags: mysql
+  apt: name=python-mysqldb state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Copy .my.cnf file with root password credentials
   tags: mysql

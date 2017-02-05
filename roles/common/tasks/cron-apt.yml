@@ -1,0 +1,4 @@
+# file: roles/common/tasks/yum-cron.yml
+- name: Install cron-apt
+  tags: cron-apt
+  apt: name=cron-apt state=installed

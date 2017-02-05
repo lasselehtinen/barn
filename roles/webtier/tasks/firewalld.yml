@@ -2,6 +2,12 @@
 - name: Install firewalld
   tags: firewalld
   yum: name=firewalld state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Install firewalld
+  tags: firewalld
+  apt: name=firewalld state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure firewalld is running and is started on boot
   tags: firewalld
