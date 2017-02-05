@@ -4,14 +4,24 @@ This repository provides Ansible playbook targeted spesifically for Laravel appl
 * PHP
 * nginx + php-fpm with multiple virtual hosts
 * SSL certificates and renewal with Let's Encrypt
+* composer
 * redis
 * MySQL
 * Beanstalk
 * Crontab entries for queue workers and scheduled tasks
 
-Barn also tries to apply some additional security by setting SELinux mode to enforcing and enabling automatic package updates. Currenly only CentOS is supported. 
+Barn also tries to apply some additional security by setting SELinux mode to enforcing and enabling automatic package updates. 
 
 ## Getting started
+
+### Supported distributions
+
+* CentOS 7
+* RedHat (Not tested)
+* Ubuntu Trusty
+* Debian (Not tested)
+
+Other versions of the distributions listed above might work, but no guarantees given. See testing if you want to try running the distribution of your choice in virtual machines.
 
 ### Installing Ansible
 You can install Ansible by following the [official installation documentation](http://docs.ansible.com/ansible/intro_installation.html). For Windows 10 users, you can use the instructions for Ubuntu after [installing the Linux subsystem](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide). For older Windows version, please [check this tutorial on running Ansible on cygwin](https://www.jeffgeerling.com/blog/running-ansible-within-windows).
@@ -91,6 +101,14 @@ You can run the playbook on all hosts with the following command:
 ansible-playbook -i inventory site.yml
 ```
 Provisioning takes a while for the first time so go grab a coffee. If there were no problems, you should have readily provisioned machine and you can deploy your Laravel application to the /var/www/`virtualhosts.name` folder.  
+
+## Contributing
+
+Pull requests are welcome. Repository provides a Vagrant file that spins up virtual machines on the supported distributions. Please make sure that running the command below completes without any failures. If you want to add support for a new distribution, add a new base box to the Vagrant file and add the host to the inventory/testing file. Remember also to copy the existing host_vars file for the new distribution. 
+
+```shell
+ansible-playbook -i inventory/testing site.yml
+```
 
 ## Issues
 
