@@ -20,5 +20,5 @@ mysql_databases:
      mysql_user: blog
      mysql_password: table_password
   someothersite:
-     mysql_user: someothersitedbuser
+     mysql_user: otherdbuser
      mysql_password: table_password
