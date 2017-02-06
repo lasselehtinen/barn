@@ -102,6 +102,9 @@ ansible-playbook -i inventory site.yml
 ```
 Provisioning takes a while for the first time so go grab a coffee. If there were no problems, you should have readily provisioned machine and you can deploy your Laravel application to the /var/www/`virtualhosts.name` folder.  
 
+### Running custom playbooks
+Sometimes you have something specific which Barn does not cover. In that case you can create your custom playbooks. Store the playbooks to `roles/custom/files` with the .yml extension and they will be executed on all roles.
+
 ## Contributing
 
 Pull requests are welcome. Repository provides a Vagrant file that spins up virtual machines on the supported distributions. Please make sure that running the command below completes without any failures. If you want to add support for a new distribution, add a new base box to the Vagrant file and add the host to the inventory/testing file. Remember also to copy the existing host_vars file for the new distribution. 

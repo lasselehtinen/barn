@@ -4,4 +4,5 @@
   become_user: root
   roles:
     - common
+    - custom
     - queuetier
