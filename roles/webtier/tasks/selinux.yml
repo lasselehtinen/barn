@@ -1,7 +1,7 @@
 # file: roles/webtier/tasks/selinux.yml
 - name: Enable nginx to have access to the deployment folder
   tags: selinux
-  shell: chcon -R -t httpd_sys_rw_content_t /var/www/{{ item.key }}/public
+  shell: chcon -R -t httpd_sys_rw_content_t /var/www/{{ item.key }}
   with_dict: "{{ virtualhosts }}"
   changed_when: False
 
