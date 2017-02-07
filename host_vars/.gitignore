@@ -1,0 +1,5 @@
+*
+!.gitignore
+!centos7-test
+!localhost
+!ubuntu-test
