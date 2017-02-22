@@ -3,6 +3,6 @@
   become: true
   become_user: root
   roles:
-    - common
-    - custom
+    - common    
     - queuetier
+    - custom
