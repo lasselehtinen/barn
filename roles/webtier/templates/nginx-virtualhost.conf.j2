@@ -5,6 +5,9 @@ server {
     root   /var/www/{{ item.key }}/public;
     index index.php;
 
+    access_log  /var/log/nginx/{{ item.value.servername }}-access.log;
+    error_log  /var/log/nginx/{{ item.value.servername }}-error.log error;
+
     location / {
         try_files $uri $uri/ /index.php?$args;
         autoindex on;
