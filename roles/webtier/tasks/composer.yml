@@ -21,3 +21,4 @@
   tags: composer
   command: composer selfupdate
   when: composer_binary.stat.exists == true
+  changed_when: false
