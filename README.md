@@ -49,11 +49,14 @@ php_extra_packages:
 # A list of virtual hosts
 virtualhosts:
   blog:
-    servername: blog.development
+    servernames:
+    - blog.development
+    - someother.development
     run_queue_worker: true
     has_scheduled_jobs: true
   someothersite:
-    servername: someothersite.development
+    servernames:
+    - someothersite.development
     
 # MySQL root password
 mysql_root_password: somesecret
@@ -79,7 +82,7 @@ Since you storing highly confidential information like production database passw
 | letsencrypt_email                     | Email address for sending the expiry notices for the certificates.                              | No        |
 | php_extra_packages                    | List of extra php-packages you want to install                                                  | No        |
 | virtualhosts.name                     | Shortname used for folders like /var/www/name/public                                            | Yes       |
-| virtualhosts.name.servername          | Hostname for the virtual host. Must be a valid FQDN if you set enable_ssl to true.              | Yes       |
+| virtualhosts.name.servernames         | List of hostnames for the virtual host. Must be a valid FQDN if you set enable_ssl to true.     | Yes       |
 | virtualhosts.name.run_queue_worker    | Sets whether we should run artisan queue:work on this virtualhost                               | No        |
 | virtualhosts.name.has_scheduled_jobs  | Sets whether we should run artisan schedule:run every minute on this virtualhost                | No        |
 | mysql_root_password                   | Root password for MySQL                                                                         | Yes       |

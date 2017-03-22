@@ -2,7 +2,7 @@ server {
     listen       80;
     listen       443 http2 ssl;
 
-    server_name  {{ item.value.servername }} {{ ansible_default_ipv4["address"] }} localhost;
+    server_name  {{ item.value.servernames | join(" ") }} {{ ansible_default_ipv4["address"] }} localhost;
 
     root   /var/www/{{ item.key }}/public;
     index index.php;

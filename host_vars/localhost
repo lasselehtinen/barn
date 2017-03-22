@@ -9,11 +9,14 @@ php_extra_packages:
 # A list of virtual hosts
 virtualhosts:
   blog:
-    servername: blog.development
+    servernames:
+    - blog.development
+    - someother.development
     run_queue_worker: true
     has_scheduled_jobs: true
   someothersite:
-    servername: someothersite.development
+    servernames:
+    - someothersite.development
     
 # MySQL root password
 mysql_root_password: somesecret
