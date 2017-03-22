@@ -2,6 +2,11 @@
 enable_ssl: false
 letsencrypt_email: somebody@somewhere.com
 
+# Extra PHP packages
+php_extra_packages:
+    - php-soap
+    - php-intl
+
 # A list of virtual hosts
 virtualhosts:
   blog:

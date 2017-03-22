@@ -42,6 +42,10 @@ Host variables control some of the aspects how the machine is configured. Store 
 enable_ssl: false
 letsencrypt_email: somebody@somewhere.com
 
+# Extra PHP packages
+php_extra_packages:    
+    - php-intl
+
 # A list of virtual hosts
 virtualhosts:
   blog:
@@ -60,7 +64,7 @@ mysql_databases:
      mysql_user: blog
      mysql_password: table_password
   someothersite:
-     mysql_user: someothersitedbuser
+     mysql_user: otherdbuser
      mysql_password: table_password
 ```
 
@@ -73,6 +77,7 @@ Since you storing highly confidential information like production database passw
 |-------------------------------------- |-----------------------------------------------------------------------------------------------  |---------- |
 | enable_ssl                            | Controls whether the Playbook configures Let's Encrypt certificates on all the virtual hosts.   | No        |
 | letsencrypt_email                     | Email address for sending the expiry notices for the certificates.                              | No        |
+| php_extra_packages                    | List of extra php-packages you want to install                                                  | No        |
 | virtualhosts.name                     | Shortname used for folders like /var/www/name/public                                            | Yes       |
 | virtualhosts.name.servername          | Hostname for the virtual host. Must be a valid FQDN if you set enable_ssl to true.              | Yes       |
 | virtualhosts.name.run_queue_worker    | Sets whether we should run artisan queue:work on this virtualhost                               | No        |

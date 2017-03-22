@@ -27,3 +27,19 @@
     - php7.1-mysqlnd
     - php7.1-opcache
   when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Install extra PHP packages
+  yum: name={{ item }} state=installed enablerepo=epel,remi,remi-php71
+  tags: php-extra
+  with_items: "{{ php_extra_packages }}"
+  when: php_extra_packages is defined and (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat')
+  notify:
+    - Restart php-fpm
+
+- name: Install extra PHP packages
+  apt: name={{ item }} state=installed update_cache=yes
+  tags: php-extra
+  with_items: "{{ php_extra_packages }}"
+  when: php_extra_packages is defined and (ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian')
+  notify:
+    - Restart php-fpm (Debian)
