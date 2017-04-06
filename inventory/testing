@@ -11,3 +11,7 @@ ubuntu-test ansible_ssh_host=localhost ansible_ssh_port=2211 ansible_ssh_user=va
 [queueservers]
 centos7-test ansible_ssh_host=localhost ansible_ssh_port=2210 ansible_ssh_user=vagrant
 ubuntu-test ansible_ssh_host=localhost ansible_ssh_port=2211 ansible_ssh_user=vagrant
+
+[elasticsearchservers]
+centos7-test ansible_ssh_host=localhost ansible_ssh_port=2210 ansible_ssh_user=vagrant
+ubuntu-test ansible_ssh_host=localhost ansible_ssh_port=2211 ansible_ssh_user=vagrant

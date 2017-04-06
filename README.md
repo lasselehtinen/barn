@@ -8,6 +8,7 @@ This repository provides Ansible playbook targeted spesifically for Laravel appl
 * redis
 * MySQL
 * Beanstalk
+* elasticsearch
 * Crontab entries for queue workers and scheduled tasks
 
 Barn also tries to apply some additional security by setting SELinux mode to enforcing and enabling automatic package updates. 

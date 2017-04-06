@@ -1,0 +1,10 @@
+# file: roles/elasticsearchtier/tasks/elasticsearch-yum-repo.yml
+- name: Import PGP key for elasticsearch APT repository
+  tags: elasticsearch
+  apt_key: state=present url=http://packages.elastic.co/GPG-KEY-elasticsearch
+
+- name: Enable elasticsearch APT repository permanently
+  tags: elasticsearch
+  apt_repository:
+    repo: deb http://packages.elastic.co/elasticsearch/5.x/debian stable main
+    state: present
