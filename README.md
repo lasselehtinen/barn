@@ -88,6 +88,7 @@ Since you storing highly confidential information like production database passw
 | virtualhosts.name                     | Shortname used for folders like /var/www/name/public                                            | Yes       |
 | virtualhosts.name.servernames         | List of hostnames for the virtual host. Must be a valid FQDN if you set enable_ssl to true.     | Yes       |
 | virtualhosts.name.run_queue_worker    | Sets whether we should run artisan queue:work on this virtualhost                               | No        |
+| virtualhosts.name.queue_worker_timeout| Sets the timeout for the queue worker, default is 60 seconds                                    | No        |
 | virtualhosts.name.has_scheduled_jobs  | Sets whether we should run artisan schedule:run every minute on this virtualhost                | No        |
 | mysql_root_password                   | Root password for MySQL                                                                         | Yes       |
 | mysql_databases.name                  | Name of MySQL database that will generated                                                      | Yes       |
