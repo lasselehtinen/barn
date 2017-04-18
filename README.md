@@ -72,8 +72,11 @@ mysql_databases:
      mysql_password: table_password
 ```
 
+### Create .env templates
+Create .env file templates in the dotenv_templates folder with the name `{{hostname}}.{{virtualhost}}.j2`. For example host centos7-test has a virtualhost called blog so the template should be named `centos7-test.blog.j2`. This is completely optional.
+
 ### Securing your host variables
-Since you storing highly confidential information like production database passwords in the host variables file it is highly recommend that encrypt them with a symmetric AES key. Luckily Ansible has built-in tool for this called Vault. Please [read the Vault documentation](http://docs.ansible.com/ansible/playbooks_vault.html) on how to set it up.
+Since you storing highly confidential information like production database passwords in the host variables and .env templates it is highly recommend that encrypt them with a symmetric AES key. Luckily Ansible has built-in tool for this called Vault. Please [read the Vault documentation](http://docs.ansible.com/ansible/playbooks_vault.html) on how to set it up.
 
 #### Supported variables
 
