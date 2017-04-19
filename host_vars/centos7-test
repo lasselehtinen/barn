@@ -7,6 +7,9 @@ php_extra_packages:
     - php-soap
     - php-intl
 
+# PHP memory limit
+php_memory_limit: "512M"
+
 # A list of virtual hosts
 virtualhosts:
   blog:

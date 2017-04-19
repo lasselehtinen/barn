@@ -47,6 +47,9 @@ letsencrypt_email: somebody@somewhere.com
 php_extra_packages:    
     - php-intl
 
+# PHP memory limit
+php_memory_limit: "512M"
+
 # A list of virtual hosts
 virtualhosts:
   blog:
@@ -85,6 +88,7 @@ Since you storing highly confidential information like production database passw
 | enable_ssl                            | Controls whether the Playbook configures Let's Encrypt certificates on all the virtual hosts.   | No        |
 | letsencrypt_email                     | Email address for sending the expiry notices for the certificates.                              | No        |
 | php_extra_packages                    | List of extra php-packages you want to install                                                  | No        |
+| php_memory_limit                      | Sets the memory_limit in php.ini                                                                | No        |
 | virtualhosts.name                     | Shortname used for folders like /var/www/name/public                                            | Yes       |
 | virtualhosts.name.servernames         | List of hostnames for the virtual host. Must be a valid FQDN if you set enable_ssl to true.     | Yes       |
 | virtualhosts.name.run_queue_worker    | Sets whether we should run artisan queue:work on this virtualhost                               | No        |

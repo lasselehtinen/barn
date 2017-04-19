@@ -43,3 +43,29 @@
   when: php_extra_packages is defined and (ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian')
   notify:
     - Restart php-fpm (Debian)
+
+- name: Set PHP memory limit in php.ini
+  tags: php
+  ini_file:
+    dest: /etc/php.ini
+    section: "PHP"
+    option: memory_limit
+    value: "{{ php_memory_limit }}"
+  when: php_memory_limit is defined and (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat')
+  notify:
+    - Restart php-fpm
+
+- name: Set PHP memory limit in php.ini
+  tags: php
+  ini_file:
+    dest: "{{ item }}"
+    section: "PHP"
+    option: memory_limit
+    value: "{{ php_memory_limit }}"
+  with_items:
+    - /etc/php/7.1/apache2/php.ini
+    - /etc/php/7.1/fpm/php.ini
+    - /etc/php/7.1/cli/php.ini    
+  when: php_memory_limit is defined and (ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian')
+  notify:
+    - Restart php-fpm (Debian)

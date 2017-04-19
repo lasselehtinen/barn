@@ -6,7 +6,10 @@ letsencrypt_email: somebody@somewhere.com
 php_extra_packages:
     - php7.1-soap
     - php7.1-intl
-    
+
+# PHP memory limit
+php_memory_limit: "512M"
+
 # A list of virtual hosts
 virtualhosts:
   blog:
