@@ -1,0 +1,8 @@
+[program:{{ item.key }}-horizon]
+process_name=%(program_name)s
+command=php /var/www/{{ item.key }}/artisan horizon
+autostart=true
+autorestart=true
+user=nginx
+redirect_stderr=true
+stdout_logfile=/var/log/{{ item.key }}-horizon.log
