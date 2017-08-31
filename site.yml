@@ -2,3 +2,4 @@
 - include: webservers.yml
 - include: mysqlservers.yml
 - include: queueservers.yml
+- include: elasticsearchservers.yml

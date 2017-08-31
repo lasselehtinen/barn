@@ -1,0 +1,8 @@
+# file: elasticsearchservers.yml
+- hosts: elasticsearchservers
+  become: true
+  become_user: root
+  roles:
+    - common
+    - elasticsearchtier
+    - custom

@@ -1,0 +1,8 @@
+# file: roles/elasticsearchtier/tasks/main.yml
+- include: java.yml
+- include: elasticsearch-yum-repo.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+- include: elasticsearch-apt-repo.yml
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+- include: elasticsearch.yml
+

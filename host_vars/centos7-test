@@ -7,6 +7,9 @@ php_extra_packages:
     - php-soap
     - php-intl
 
+# PHP memory limit
+php_memory_limit: "512M"
+
 # A list of virtual hosts
 virtualhosts:
   blog:
@@ -14,6 +17,7 @@ virtualhosts:
     - blog.development
     - someother.development
     run_queue_worker: true
+    queue_worker_timeout: 60
     has_scheduled_jobs: true
     
 # MySQL root password

@@ -11,4 +11,4 @@
 
 - name: Make sure beanstalk is running and started on boot
   tags: beanstalk
-  service: name=beanstalkd state=started
+  service: name=beanstalkd state=started enabled=yes

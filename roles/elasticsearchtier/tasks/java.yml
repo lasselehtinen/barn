@@ -1,0 +1,36 @@
+# file: roles/elasticsearchtier/tasks/java.yml
+- name: Install Java
+  tags: elasticsearch
+  yum: name=java-1.8.0-openjdk state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Enable Oracle Java repository permanently
+  tags: elasticsearch
+  apt_repository:
+    repo: ppa:webupd8team/java
+    state: present
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: accept oracle license
+  tags: elasticsearch
+  debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: install jdk
+  tags: elasticsearch
+  apt: name=oracle-java8-installer state=present
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+#- name: Accept Oracle license
+#  tags: elasticsearch
+#  debconf:
+#    name: oracle-java8-installer
+#    question: shared/accepted-oracle-license-v1-1
+#    value: true
+#    vtype: select
+#  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+#
+#- name: Install Java
+#  tags: elasticsearch
+#  apt: name=oracle-java8-installer update_cache=yes state=installed
+#  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
