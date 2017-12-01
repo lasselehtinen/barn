@@ -6,7 +6,7 @@
 
 - name: Install php-fpm
   tags: php-fpm
-  apt: name=php7.1-fpm state=installed
+  apt: name=php7.2-fpm state=installed
   when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure php-fpm is running
@@ -16,7 +16,7 @@
 
 - name: Make sure php-fpm is running
   tags: php-fpm
-  service: name=php7.1-fpm state=started enabled=yes
+  service: name=php7.2-fpm state=started enabled=yes
   when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure php-fpm is configured
@@ -28,7 +28,7 @@
 
 - name: Make sure php-fpm is configured
   tags: php-fpm
-  template: src=php-fpm.conf.j2 dest=/etc/php/7.1/fpm/pool.d/www.conf
+  template: src=php-fpm.conf.j2 dest=/etc/php/7.2/fpm/pool.d/www.conf
   notify:
     - Restart php-fpm (Debian)
   when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'

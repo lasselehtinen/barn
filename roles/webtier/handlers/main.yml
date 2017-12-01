@@ -6,4 +6,4 @@
   service: name=php-fpm state=restarted
 
 - name: Restart php-fpm (Debian)
-  service: name=php7.1-fpm state=restarted
+  service: name=php7.2-fpm state=restarted

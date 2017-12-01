@@ -4,8 +4,8 @@ letsencrypt_email: somebody@somewhere.com
 
 # Extra PHP packages
 php_extra_packages:
-    - php7.1-soap
-    - php7.1-intl
+    - php7.2-soap
+    - php7.2-intl
 
 # PHP memory limit
 php_memory_limit: "512M"
