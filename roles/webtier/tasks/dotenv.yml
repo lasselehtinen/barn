@@ -9,6 +9,6 @@
 
 - name: Create node spesific .env file  
   tags: dotenv
-  template: src=dotenv_templates/{{ inventory_hostname }}.{{ item.key }}.j2 dest=/var/www/{{ item.key }}/.env
-  with_dict: "{{ virtualhosts }}"  
-  when: dotenv_file.results[0].stat.exists == True
+  template: src={{ item.stat.path }} dest=/var/www/{{ item.item.key }}/.env
+  with_items: "{{ dotenv_file.results }}"  
+  when: item.stat.exists == True
