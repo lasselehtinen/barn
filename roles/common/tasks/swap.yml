@@ -37,7 +37,7 @@
   tags: swap
   lineinfile: dest=/etc/fstab line="/swapfile   swap    swap    sw  0   0" state=present
   when: needs_extra_swap is defined and needs_extra_swap == true
-  
+
 - name: Set swapfile permissions
   tags: swap
   file: path=/swapfile mode=600
