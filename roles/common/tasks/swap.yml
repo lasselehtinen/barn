@@ -40,7 +40,7 @@
 
 - name: Set swapfile permissions
   tags: swap
-  file: path=/swapfile mode=600
+  file: path=/swapfile mode=0600
   when: needs_extra_swap is defined and needs_extra_swap == true
 
 - name: Configure vm.swappiness
