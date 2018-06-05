@@ -8,14 +8,6 @@
 - include: remi.yml
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
-- name: Upgrade all packages
-  yum: name=* state=latest
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
-
-- name: Upgrade all packages
-  apt: upgrade=full update_cache=yes
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
-
 - name: Make sure git is installed
   tags: git
   yum: name=git state=installed
