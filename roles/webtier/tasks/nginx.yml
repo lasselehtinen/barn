@@ -26,7 +26,7 @@
   when: enable_ssl|default(false)|bool == false
   notify:
     - Restart nginx
-    
+
 - name: Make sure SSL nginx virtual hosts are configured
   tags: nginx
   template: src=nginx-ssl-virtualhost.conf.j2 dest=/etc/nginx/conf.d/{{ item.key }}.conf

@@ -8,7 +8,7 @@
   yum_repository:
     name: elasticsearch
     description: Elasticsearch repository for 5.x packages
-    baseurl: https://artifacts.elastic.co/packages/5.x/yum    
+    baseurl: https://artifacts.elastic.co/packages/5.x/yum
     enabled: 1
     gpgcheck: 1
     gpgkey: file:///etc/pki/rpm-gpg/GPG-KEY-elasticsearch

@@ -57,11 +57,11 @@
 - name: Delete anonymous MySQL server user for {{ ansible_hostname }}
   tags: mysql
   action: mysql_user user="" host="{{ ansible_hostname }}" state="absent"
- 
+
 - name: Delete anonymous MySQL server user for localhost
   tags: mysql
   action: mysql_user user="" state="absent"
- 
+
 - name: Remove the MySQL test database
   tags: mysql
   action: mysql_db db=test state=absent

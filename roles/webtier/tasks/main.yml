@@ -2,7 +2,7 @@
 - include: remi.yml
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 - include: ondrej.yml
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'  
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 - include: php.yml
 - include: php-fpm.yml
 - include: composer.yml
