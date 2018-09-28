@@ -10,7 +10,6 @@ server {
 
     location / {
         try_files $uri $uri/ /index.php?$args;
-        autoindex on;
     }
 
     location ~ \.php$ {
