@@ -1,10 +1,10 @@
 # file: roles/webtier/tasks/remi.yml
-- name: Enable Remi's PHP 7.1 repository permanently
+- name: Enable Remi's PHP 7.2 repository permanently
   tags: remi
   yum_repository:
-    name: remi-php71
-    description: Remi's PHP 7.1 RPM repository for Enterprise Linux 7
-    mirrorlist: http://rpms.remirepo.net/enterprise/7/php71/mirror
+    name: remi-php72
+    description: Remi's PHP 7.2 RPM repository for Enterprise Linux 7
+    mirrorlist: http://rpms.remirepo.net/enterprise/7/php72/mirror
     enabled: 1
     gpgcheck: 1
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-remi

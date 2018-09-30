@@ -1,0 +1,20 @@
+# file: roles/queuetier/tasks/redis.yml
+- name: Install redis
+  tags: redis
+  yum: name=redis state=installed enablerepo=remi
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Install redis
+  tags: redis
+  apt: name=redis-server state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Make sure redis is running and started on boot
+  tags: redis
+  service: name=redis state=started enabled=yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Make sure redis is running and started on boot
+  tags: redis
+  service: name=redis-server state=started enabled=yes
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'

@@ -1,6 +1,6 @@
 # file: roles/webtier/tasks/php.yml
 - name: Install PHP and extensions
-  yum: name={{ item }} state=installed enablerepo=epel,remi,remi-php71
+  yum: name={{ item }} state=installed enablerepo=epel,remi,remi-php72
   tags: php
   with_items:
     - php
@@ -18,18 +18,18 @@
   apt: name={{ item }} state=installed update_cache=yes
   tags: php
   with_items:
-    - php7.1
-    - php7.1-zip
-    - php7.1-pdo
-    - php7.1-mbstring
-    - php7.1-tokenizer
-    - php7.1-xml
-    - php7.1-mysqlnd
-    - php7.1-opcache
+    - php7.2
+    - php7.2-zip
+    - php7.2-pdo
+    - php7.2-mbstring
+    - php7.2-tokenizer
+    - php7.2-xml
+    - php7.2-mysqlnd
+    - php7.2-opcache
   when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Install extra PHP packages
-  yum: name={{ item }} state=installed enablerepo=epel,remi,remi-php71
+  yum: name={{ item }} state=installed enablerepo=epel,remi,remi-php72
   tags: php-extra
   with_items: "{{ php_extra_packages }}"
   when: php_extra_packages is defined and (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat')
@@ -41,5 +41,31 @@
   tags: php-extra
   with_items: "{{ php_extra_packages }}"
   when: php_extra_packages is defined and (ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian')
+  notify:
+    - Restart php-fpm (Debian)
+
+- name: Set PHP memory limit in php.ini
+  tags: php
+  ini_file:
+    dest: /etc/php.ini
+    section: "PHP"
+    option: memory_limit
+    value: "{{ php_memory_limit }}"
+  when: php_memory_limit is defined and (ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat')
+  notify:
+    - Restart php-fpm
+
+- name: Set PHP memory limit in php.ini
+  tags: php
+  ini_file:
+    dest: "{{ item }}"
+    section: "PHP"
+    option: memory_limit
+    value: "{{ php_memory_limit }}"
+  with_items:
+    - /etc/php/7.2/apache2/php.ini
+    - /etc/php/7.2/fpm/php.ini
+    - /etc/php/7.2/cli/php.ini    
+  when: php_memory_limit is defined and (ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian')
   notify:
     - Restart php-fpm (Debian)

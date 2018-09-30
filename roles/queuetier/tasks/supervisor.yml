@@ -24,13 +24,37 @@
   template: src=supervisor.conf.j2 dest=/etc/supervisord.d/{{ item.key }}-worker.ini
   with_dict: "{{ virtualhosts }}"
   when: item.value.run_queue_worker|default(false)|bool == true and ansible_distribution == 'CentOS'
+  vars:
+    user: nginx
   notify:
     - Reload supervisord config
 
 - name: Make sure supervisor job is configured
   tags: supervisor
-  template: src=supervisor-debian.conf.j2 dest=/etc/supervisor/conf.d/{{ item.key }}-worker.conf
+  template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/{{ item.key }}-worker.conf
   with_dict: "{{ virtualhosts }}"
   when: item.value.run_queue_worker|default(false)|bool == true and ansible_distribution == 'Ubuntu'
+  vars:
+    user: www-data
+  notify:
+    - Reload supervisord config (Debian)
+
+- name: Make sure supervisor job is configured for Horizon
+  tags: supervisor
+  template: src=supervisor-horizon.conf.j2 dest=/etc/supervisord.d/{{ item.key }}-horizon.ini
+  with_dict: "{{ virtualhosts }}"
+  when: item.value.run_horizon|default(false)|bool == true and ansible_distribution == 'CentOS'
+  vars:
+    user: nginx
+  notify:
+    - Reload supervisord config
+
+- name: Make sure supervisor job is configured for Horizon
+  tags: supervisor
+  template: src=supervisor-horizon.conf.j2 dest=/etc/supervisor/conf.d/{{ item.key }}-horizon.conf
+  with_dict: "{{ virtualhosts }}"
+  when: item.value.run_horizon|default(false)|bool == true and ansible_distribution == 'Ubuntu'
+  vars:
+    user: www-data
   notify:
     - Reload supervisord config (Debian)

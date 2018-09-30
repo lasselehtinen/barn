@@ -10,6 +10,7 @@ This repository provides Ansible playbook targeted spesifically for Laravel appl
 * Beanstalk
 * elasticsearch
 * Crontab entries for queue workers and scheduled tasks
+* Laravel Horizon
 
 Barn also tries to apply some additional security by setting SELinux mode to enforcing and enabling automatic package updates. 
 
@@ -47,6 +48,9 @@ letsencrypt_email: somebody@somewhere.com
 php_extra_packages:    
     - php-intl
 
+# PHP memory limit
+php_memory_limit: "512M"
+
 # A list of virtual hosts
 virtualhosts:
   blog:
@@ -54,6 +58,7 @@ virtualhosts:
     - blog.development
     - someother.development
     run_queue_worker: true
+    run_horizon: false
     has_scheduled_jobs: true
   someothersite:
     servernames:
@@ -72,24 +77,30 @@ mysql_databases:
      mysql_password: table_password
 ```
 
+### Create .env templates
+Create .env file templates in the dotenv_templates folder with the name `{{hostname}}.{{virtualhost}}.j2`. For example host centos7-test has a virtualhost called blog so the template should be named `centos7-test.blog.j2`. This is completely optional.
+
 ### Securing your host variables
-Since you storing highly confidential information like production database passwords in the host variables file it is highly recommend that encrypt them with a symmetric AES key. Luckily Ansible has built-in tool for this called Vault. Please [read the Vault documentation](http://docs.ansible.com/ansible/playbooks_vault.html) on how to set it up.
+Since you storing highly confidential information like production database passwords in the host variables and .env templates it is highly recommend that encrypt them with a symmetric AES key. Luckily Ansible has built-in tool for this called Vault. Please [read the Vault documentation](http://docs.ansible.com/ansible/playbooks_vault.html) on how to set it up.
 
 #### Supported variables
 
-| Name                                  | Description                                                                                     | Required  |
-|-------------------------------------- |-----------------------------------------------------------------------------------------------  |---------- |
-| enable_ssl                            | Controls whether the Playbook configures Let's Encrypt certificates on all the virtual hosts.   | No        |
-| letsencrypt_email                     | Email address for sending the expiry notices for the certificates.                              | No        |
-| php_extra_packages                    | List of extra php-packages you want to install                                                  | No        |
-| virtualhosts.name                     | Shortname used for folders like /var/www/name/public                                            | Yes       |
-| virtualhosts.name.servernames         | List of hostnames for the virtual host. Must be a valid FQDN if you set enable_ssl to true.     | Yes       |
-| virtualhosts.name.run_queue_worker    | Sets whether we should run artisan queue:work on this virtualhost                               | No        |
-| virtualhosts.name.has_scheduled_jobs  | Sets whether we should run artisan schedule:run every minute on this virtualhost                | No        |
-| mysql_root_password                   | Root password for MySQL                                                                         | Yes       |
-| mysql_databases.name                  | Name of MySQL database that will generated                                                      | Yes       |
-| mysql_databases.name.mysql_user       | Name of normal MySQL user for that database. Place this in your .env file.                      | Yes       |
-| mysql_databases.name.mysql_password   | Password for the MySQL user. Place this in your .env file.                                      | Yes       |     |
+| Name                                   | Description                                                                                                            | Required |
+|----------------------------------------|------------------------------------------------------------------------------------------------------------------------|----------|
+| enable_ssl                             | Controls whether the Playbook configures Let's Encrypt certificates on all the virtual hosts.                          | No       |
+| letsencrypt_email                      | Email address for sending the expiry notices for the certificates.                                                     | No       |
+| php_extra_packages                     | List of extra php-packages you want to install                                                                         | No       |
+| php_memory_limit                       | Sets the memory_limit in php.ini                                                                                       | No       |
+| virtualhosts.name                      | Shortname used for folders like /var/www/name/public                                                                   | Yes      |
+| virtualhosts.name.servernames          | List of hostnames for the virtual host. Must be a valid FQDN if you set enable_ssl to true.                            | Yes      |
+| virtualhosts.name.run_queue_worker     | Sets whether we should run artisan queue:work on this virtualhost                                                      | No       |
+| virtualhosts.name.run_horizon          |  Sets whether Horizon should be running on this virtual host. Do not set both run_queue_worker and run_horizon to true | No       |
+| virtualhosts.name.queue_worker_timeout | Sets the timeout for the queue worker, default is 60 seconds                                                           | No       |
+| virtualhosts.name.has_scheduled_jobs   | Sets whether we should run artisan schedule:run every minute on this virtualhost                                       | No       |
+| mysql_root_password                    | Root password for MySQL                                                                                                | Yes      |
+| mysql_databases.name                   | Name of MySQL database that will generated                                                                             | Yes      |
+| mysql_databases.name.mysql_user        | Name of normal MySQL user for that database. Place this in your .env file.                                             | Yes      |
+| mysql_databases.name.mysql_password    | Password for the MySQL user. Place this in your .env file.                                                             | Yes      |                                   | Yes       |     |
 
 ## Running Barn
 
