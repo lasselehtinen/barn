@@ -4,9 +4,29 @@
   yum: name=nginx state=installed
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
+- name: Make sure apache related packages are removed
+  tags: nginx
+  apt: name="{{ packages }}" state=absent purge=yes
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+  vars:
+      packages:
+      - apache2
+      - apache2-utils
+
 - name: Install nginx
   tags: nginx
   apt: name=nginx state=installed
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+- name: Make sure nginx user exists
+  tags: nginx
+  user:
+    name: nginx
+    comment: nginx user
+    createhome: false
+    generate_ssh_key: false
+    shell: /bin/false
+    system: yes
   when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Make sure nginx is running and is started on boot
